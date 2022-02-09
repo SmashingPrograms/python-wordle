@@ -1,3 +1,21 @@
+import random
+
+
+
+
+def green_background(str):
+  return "\33[7;49;32m " + str + " \33[0;49;37m"
+
+def gray_background(str):
+  return "\33[7;49;90m " + str + " \33[0;49;37m"
+
+def yellow_background(str):
+  return "\33[7;49;93m " + str + " \33[0;49;37m"
+
+
+
+
+
 def load_words():
   with open('/usr/share/dict/words') as infile:
     word_list = infile.read().splitlines()
@@ -11,7 +29,7 @@ count = 0
 
 for word in old_word_list:
   count += 1
-  print("Loading word ", count, " of ", len(old_word_list))
+  print("Filtering word", count, "of", len(old_word_list))
   if len(word) == 5:
     word_list.append(word.upper())
 
@@ -21,14 +39,47 @@ print("\n\nLoaded!\n\n")
 
 
 
-def green_background(str):
-  return "\33[7;49;32m" + str + "\33[0;49;37m"
+secret_word = random.choice(word_list)
 
-def gray_background(str):
-  return "\33[7;49;90m" + str + "\33[0;49;37m"
+print(secret_word)
 
-def yellow_background(str):
-  return "\33[7;49;93m" + str + "\33[0;49;37m"
+
+print("""_ _ _ _ _
+_ _ _ _ _
+_ _ _ _ _
+_ _ _ _ _
+_ _ _ _ _
+_ _ _ _ _
+
+
+""")
+
+while 1:
+  guess = input("Try to guess the 5-letter word: ").upper()
+
+  colored_guess = []
+
+  if guess == "":
+    print("Please type something!")
+  elif guess not in word_list and len(guess) == 5:
+    print("That's not a known word!")
+  elif len(guess) != 5:
+    print("Please guess a 5-letter word only!")
+  else:
+    for letter in guess:
+      if letter in secret_word:
+        if secret_word[guess.index(letter)] == letter:
+          print(letter, "IS in", secret_word, "AND IT IS GREEN")
+          colored_guess.append(green_background(letter))
+        else:
+          colored_guess.append(yellow_background(letter))
+      else:
+        colored_guess.append(gray_background(letter))
+        print(letter, "is NOT in", secret_word)
+
+  colored_guess = "".join(colored_guess)
+
+  print(colored_guess)
 
 
 # list_of_words = []
