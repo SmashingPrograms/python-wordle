@@ -66,16 +66,17 @@ while 1:
   elif len(guess) != 5:
     print("Please guess a 5-letter word only!")
   else:
+    guess_iterated = []
     for letter in guess:
-      if letter in secret_word:
-        if secret_word[guess.index(letter)] == letter:
-          print(letter, "IS in", secret_word, "AND IT IS GREEN")
-          colored_guess.append(green_background(letter))
-        else:
-          colored_guess.append(yellow_background(letter))
+      if secret_word[len(guess_iterated)] == letter:
+        print(letter, "IS in", secret_word, "AND IT IS GREEN")
+        colored_guess.append(green_background(letter))
+      elif letter in secret_word and guess_iterated.count(letter) < secret_word.count(letter):
+        colored_guess.append(yellow_background(letter))
       else:
         colored_guess.append(gray_background(letter))
         print(letter, "is NOT in", secret_word)
+      guess_iterated.append(letter)
 
   colored_guess = "".join(colored_guess)
 
