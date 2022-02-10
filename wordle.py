@@ -42,27 +42,17 @@ print("\n\nLoaded!\n\n")
 
 secret_word = random.choice(word_list)
 
-print(secret_word)
-
-
-print("""_ _ _ _ _
-_ _ _ _ _
-_ _ _ _ _
-_ _ _ _ _
-_ _ _ _ _
-_ _ _ _ _
-
-
-""")
-
 tries = 6
 
 guesses = []
 
 while 1:
-  print("Guesses: ", guesses)
+  # print("Guesses: ", guesses)
   guesses_display = "\n".join(guesses) + "\n" + (blank_space_row * tries)
   print(guesses_display)
+  if tries == 0:
+    print("You lost! Sorry! The secret word was", secret_word + ". Try again another day.")
+    break
   guess = input("Try to guess the 5-letter word: ").upper()
 
   colored_guess = []
@@ -70,9 +60,9 @@ while 1:
   if guess == "":
     print("Please type something!")
     continue
-  # elif guess not in word_list and len(guess) == 5:
-  #   print("That's not a known word!")
-  #   continue
+  elif guess not in word_list and len(guess) == 5:
+    print("That's not a known word!")
+    continue
   elif len(guess) != 5:
     print("Please guess a 5-letter word only!")
     continue
@@ -81,12 +71,12 @@ while 1:
     guess_iterated = []
     for letter in guess:
       if secret_word[len(guess_iterated)] == letter:
-        print(letter, "IS in", secret_word, "AND IT IS GREEN")
+        # print(letter, "IS in", secret_word, "AND IT IS GREEN")
         colored_guess.append(green_background(letter))
         #Checks for earlier instances. Test this by using DRUPA with a guess of KARMA, or BABBA with ABAAA, ABBAA, BBBAA, etc.
-        print(guess_iterated)
+        # print(guess_iterated)
         if guess_iterated.count(letter)+1 > secret_word.count(letter):
-          print("Yup it's bigger!!!!!")
+          # print("Yup it's bigger!!!!!")
           for i in range(1, len(colored_guess)):
             if guess_iterated.count(letter)+1 == secret_word.count(letter):
               break
@@ -97,7 +87,7 @@ while 1:
         colored_guess.append(yellow_background(letter))
       else:
         colored_guess.append(gray_background(letter))
-        print(letter, "is NOT in", secret_word)
+        # print(letter, "is NOT in", secret_word)
       guess_iterated.append(letter)
 
   colored_guess = "".join(colored_guess)
@@ -106,7 +96,7 @@ while 1:
   if guess == secret_word:
     print("YOU WIN!")
     winning_guesses_display = "\n".join(guesses)
-    print(guesses_display)
+    print(winning_guesses_display)
     break
 
 
